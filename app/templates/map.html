@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Forest Conservation</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <style>
+    body {
+      background-color: #e8f5e9;
+    }
+    .navbar {
+      background-color: #43a047;
+    }
+    .navbar-brand {
+      color: #ffffff;
+      font-size: 2em;
+      text-shadow: 1px 1px 2px #000000;
+    }
+    .nav-link {
+      color: #ffffff;
+      transition: all 0.3s ease;
+      margin: 5px;
+      padding: 10px 20px;
+    }
+    .nav-link:hover {
+      color: #66bb6a;
+    }
+    .content {
+      margin: 20px;
+    }
+  </style>
+  <script>
+var submitButton = document.getElementById('generate_mask');
+function handleButtonClick() {
+  var textbox = document.getElementById('coordinates');
+  var content = textbox.value;
+  if (content.trim() === '') {
+    alert('Please paste the coordinates in the textbox.');
+    return;
+  }
+
+  var apiUrl = '/generate';
+
+  var requestData = {
+    coord: content
+  };
+
+  fetch(apiUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(requestData)
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+}
+
+submitButton.addEventListener('click', handleButtonClick);
+  </script>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+	    <a class="navbar-brand" href="#">Green Guardians</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/map">Logging Scars</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">Background</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="projects.html">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="content">
+    <iframe id="gg_gee_web_app" width="100%" height="875px" src="https://haile-solomon.users.earthengine.app/view/demo1"></iframe>
+
+    <div class="mb3">
+      <div class="row">
+	<div class="col"><h4>Inference:</h4></div>
+      </div>
+      <div class="row">
+        <div class="col">
+          Enter the coordinates in the following text box and run inference:
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <input type="text" class="form-control" id="coordinates" placeholder="">
+        </div>
+        <div class="col">
+          <button type="submit" onClick="handleButtonClick()" id="generate_mask" class="btn btn-primary mb-3" style="background-color: #43a047; border-color: #43a047;">Generate Mask</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col"><p></p></div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+</html>
